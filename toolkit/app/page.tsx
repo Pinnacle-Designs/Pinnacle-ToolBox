@@ -41,32 +41,32 @@ export default function HomePage() {
         <div className="pointer-events-none absolute inset-0 hero-glow-blue" aria-hidden />
 
         <div className="relative mx-auto max-w-7xl px-4 pb-16 pt-6 sm:pb-24 sm:pt-10 md:pb-28">
-          <div className="grid items-center gap-8 md:grid-cols-2 md:gap-10 lg:gap-14">
-            <div className="flex justify-center md:justify-end">
+          <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-14">
+            <div className="flex justify-center lg:justify-end">
               <img
                 src="/logo.png"
                 alt="Pinnacle Toolbox"
-                className="relative z-10 w-[min(88vw,20rem)] object-contain drop-shadow-[0_20px_80px_rgba(229,48,15,0.35)] sm:w-[min(80vw,24rem)] md:w-full md:max-w-sm lg:max-w-md xl:max-w-lg"
+                className="relative z-10 w-[min(88vw,20rem)] object-contain drop-shadow-[0_20px_80px_rgba(229,48,15,0.35)] sm:w-[min(80vw,24rem)] lg:w-full lg:max-w-md xl:max-w-lg"
                 width={640}
                 height={640}
               />
             </div>
 
             <div className="hero-panel hero-panel-side relative z-20">
-            <div className="mb-5 flex flex-wrap items-center justify-center gap-2">
-              <span className="badge-gold">{count} Free Tools</span>
-              <span className="hero-pill">No login required</span>
-              <span className="hero-pill">100% client-side</span>
-            </div>
+              <div className="mb-5 flex flex-wrap items-center justify-center gap-2">
+                <span className="badge-gold">{count} Free Tools</span>
+                <span className="hero-pill">No login required</span>
+                <span className="hero-pill">100% client-side</span>
+              </div>
 
-            <h1 className="text-center text-2xl font-bold leading-tight tracking-tight text-brand-white sm:text-3xl md:text-4xl">
+              <h1 className="text-center text-2xl font-bold leading-tight tracking-tight text-brand-white sm:text-3xl md:text-4xl">
               Free Online Tools — Fast, Simple, Private
-            </h1>
-            <p className="mx-auto mt-3 max-w-lg text-center text-sm leading-relaxed text-brand-silver sm:text-base">
-              Text, images, code, math, documents, and productivity — all in your browser, no account needed.
-            </p>
+              </h1>
+              <p className="mx-auto mt-3 max-w-lg text-center text-sm leading-relaxed text-brand-silver sm:text-base">
+                Text, images, code, math, documents, and productivity — all in your browser, no account needed.
+              </p>
 
-            <div className="mt-7">
+              <div className="mt-7">
               <label htmlFor="home-search" className="sr-only">Search tools</label>
               <div className="relative">
                 <Search
@@ -85,16 +85,16 @@ export default function HomePage() {
               <p className="mt-2 text-center text-xs text-brand-silver-muted">
                 {filter ? `Showing ${filtered.length} of ${count} tools` : "Start typing to filter the tool grid below"}
               </p>
-            </div>
+              </div>
 
-            <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t border-brand-navy-light/30 pt-5">
+              <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t border-brand-navy-light/30 pt-5">
               {HERO_FEATURES.map(({ icon: Icon, label }) => (
                 <li key={label} className="flex items-center gap-2 text-sm text-brand-silver">
                   <Icon className="h-4 w-4 text-brand-orange" aria-hidden />
                   {label}
                 </li>
               ))}
-            </ul>
+              </ul>
             </div>
           </div>
         </div>

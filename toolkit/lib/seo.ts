@@ -32,7 +32,7 @@ export function generatePageMetadata(
 ): Metadata {
   const url = `${SITE_URL}${path}`;
   return {
-    title: `${title} | ${SITE_NAME}`,
+    title,
     description,
     alternates: { canonical: url },
     openGraph: {

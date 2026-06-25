@@ -246,6 +246,12 @@ body {
     }
   }
 
+  @media (min-width: 1024px) {
+    .hero-panel {
+      margin-top: 0;
+    }
+  }
+
   .hero-pill {
     display: inline-flex;
     align-items: center;

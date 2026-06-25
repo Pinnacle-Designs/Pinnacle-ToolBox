@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
@@ -97,7 +97,12 @@ export function ToolSearch({
   variant?: "light" | "dark";
 }) {
   const [query, setQuery] = useState("");
+  const pathname = usePathname();
   const results = query ? searchTools(query).slice(0, 8) : [];
+
+  useEffect(() => {
+    setQuery("");
+  }, [pathname]);
 
   return (
     <div className="relative w-full max-w-md">

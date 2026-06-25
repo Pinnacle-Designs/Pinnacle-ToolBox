@@ -23,8 +23,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="bg-brand-black">
-      <body className={`${inter.variable} page-bg flex min-h-screen flex-col font-sans text-brand-white antialiased`}>
+    <html lang="en" className={inter.variable} style={{ backgroundColor: "#010109" }}>
+      <body
+        className={`${inter.className} page-bg flex min-h-screen flex-col font-sans text-brand-white antialiased`}
+        style={{ backgroundColor: "#010109", color: "#f9fbfb", margin: 0 }}
+      >
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
