@@ -64,6 +64,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.variable} style={{ backgroundColor: "#010109" }}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `if(location.hostname==="david-foy89.github.io"){var p=location.pathname.indexOf("/Pinnacle-ToolBox")===0?location.pathname.slice(17)||"/":location.pathname;location.replace("https://pinnacletoolbox.com"+p+location.search+location.hash);}`,
+          }}
+        />
+      </head>
       <body
         className={`${inter.className} page-bg flex min-h-screen flex-col font-sans text-brand-white antialiased`}
         style={{ backgroundColor: "#010109", color: "#f9fbfb", margin: 0 }}
