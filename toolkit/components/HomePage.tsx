@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Search, Shield, Zap, Globe } from "lucide-react";
 import { tools, getToolCount } from "@/lib/tools";
 import { CATEGORY_ORDER } from "@/lib/types";
+import { categorySlug } from "@/lib/utils";
 import ToolCard from "@/components/ToolCard";
 import AdSlot from "@/components/AdSlot";
 
@@ -131,16 +133,24 @@ export default function HomePage() {
         {grouped.map(({ category, tools: catTools }) => (
           <section
             key={category}
-            id={category.toLowerCase().replace(/[^a-z0-9]+/g, "-")}
+            id={categorySlug(category)}
             className="mb-14"
-            aria-labelledby={`category-${category.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+            aria-labelledby={`category-${categorySlug(category)}`}
           >
-            <h2
-              id={`category-${category.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-              className="section-title mb-6"
-            >
-              {category}
-            </h2>
+            <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+              <h2
+                id={`category-${categorySlug(category)}`}
+                className="section-title"
+              >
+                {category}
+              </h2>
+              <Link
+                href={`/categories/${categorySlug(category)}`}
+                className="text-sm text-brand-blue transition hover:text-brand-orange"
+              >
+                View all {category.toLowerCase()} →
+              </Link>
+            </div>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {catTools.map((tool) => (
                 <ToolCard

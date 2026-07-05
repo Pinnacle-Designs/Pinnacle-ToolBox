@@ -1,11 +1,14 @@
 import Link from "next/link";
+import { getAllCategorySeo } from "@/lib/category-seo";
 
 export default function Footer() {
+  const categories = getAllCategorySeo();
+
   return (
     <footer className="mt-auto border-t border-brand-navy-light/40 bg-brand-black">
       <div className="nav-accent-line opacity-60" aria-hidden />
       <div className="mx-auto max-w-7xl px-4 py-10">
-        <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-5">
+        <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-6">
           <div>
             <p className="text-lg font-bold">
               <span className="text-brand-white">Pinnacle</span>{" "}
@@ -26,6 +29,21 @@ export default function Footer() {
             <h3 className="font-semibold text-brand-white">Legal</h3>
             <ul className="mt-3 space-y-2 text-sm">
               <li><Link href="/privacy" className="text-brand-silver-muted transition hover:text-brand-orange">Privacy Policy</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-semibold text-brand-white">Categories</h3>
+            <ul className="mt-3 space-y-2 text-sm">
+              {categories.map((cat) => (
+                <li key={cat.slug}>
+                  <Link
+                    href={`/categories/${cat.slug}`}
+                    className="text-brand-silver-muted transition hover:text-brand-orange"
+                  >
+                    {cat.category}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           <div>

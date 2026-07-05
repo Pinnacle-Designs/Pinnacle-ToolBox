@@ -2,11 +2,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getToolBySlug } from "@/lib/tools";
 import { generateToolPageJsonLd } from "@/lib/seo";
+import { categorySlug } from "@/lib/utils";
 import AdSlot from "./AdSlot";
 import Sidebar from "./Sidebar";
 import HowToUse from "./HowToUse";
 import FAQ from "./FAQ";
 import RelatedTools from "./RelatedTools";
+import ToolSeoContent from "./ToolSeoContent";
 
 interface ToolLayoutProps {
   slug: string;
@@ -37,7 +39,7 @@ export default function ToolLayout({ slug, children }: ToolLayoutProps) {
               <li aria-hidden="true" className="text-brand-navy-light">/</li>
               <li>
                 <Link
-                  href={`/#${tool.category.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+                  href={`/categories/${categorySlug(tool.category)}`}
                   className="link-brand"
                 >
                   {tool.category}
@@ -64,6 +66,7 @@ export default function ToolLayout({ slug, children }: ToolLayoutProps) {
           </div>
 
           <HowToUse steps={tool.howToUse} />
+          <ToolSeoContent tool={tool} />
           <FAQ items={tool.faqs} />
           <RelatedTools slugs={tool.relatedTools} />
         </div>

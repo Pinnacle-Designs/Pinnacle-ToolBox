@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { getToolBySlug, tools } from "./tools";
 import type { Tool, ToolFAQ } from "./types";
-import { SITE_NAME, SITE_URL } from "./utils";
+import { getCategoryBySlug, getCategorySeo } from "./category-seo";
+import { getToolSeoContent } from "./tool-seo-content";
+import { SITE_NAME, SITE_URL, categorySlug } from "./utils";
 
 export const SITE_DESCRIPTION =
   "60+ free online tools for text, images, code, math, PDFs, and productivity. Fast, private, and browser-based — no login or upload to servers required.";
@@ -11,7 +13,7 @@ export const SITE_TAGLINE = "Free Online Tools — Fast, Simple, Private";
 export const DEFAULT_OG_IMAGE = "/logo.png";
 
 /** Stable date for sitemap lastmod — update when publishing meaningful site changes. */
-export const SITE_LAST_UPDATED = new Date("2026-06-25");
+export const SITE_LAST_UPDATED = new Date("2026-07-05");
 
 const HOME_KEYWORDS = [
   "free online tools",
@@ -36,16 +38,21 @@ function absoluteUrl(path: string): string {
 
 function toolKeywords(tool: Tool): string[] {
   const categoryShort = tool.category.replace(/ Tools$/, "").toLowerCase();
+  const categoryData = getCategorySeo(tool.category);
+  const seoContent = getToolSeoContent(tool);
   return [
     tool.name.toLowerCase(),
     tool.slug.replace(/-/g, " "),
     `free ${tool.name.toLowerCase()}`,
     `${tool.name.toLowerCase()} online`,
+    `${tool.name.toLowerCase()} free online`,
     categoryShort,
     "free online tool",
     "no login",
     "browser tool",
     SITE_NAME.toLowerCase(),
+    ...categoryData.keywords.slice(0, 4),
+    ...seoContent.features.slice(0, 2).map((f) => f.toLowerCase()),
   ];
 }
 
@@ -133,6 +140,29 @@ export function generateToolMetadata(slug: string): Metadata {
   };
 }
 
+export function generateCategoryMetadata(slug: string): Metadata {
+  const category = getCategoryBySlug(slug);
+  if (!category) {
+    const fullTitle = `Category Not Found | ${SITE_NAME}`;
+    return {
+      title: { absolute: fullTitle },
+      robots: { index: false, follow: true },
+    };
+  }
+
+  const url = `${SITE_URL}/categories/${slug}`;
+
+  return {
+    title: { absolute: `${category.metaTitle} | ${SITE_NAME}` },
+    description: category.metaDescription,
+    keywords: category.keywords,
+    alternates: { canonical: url },
+    openGraph: sharedOpenGraph(category.metaTitle, category.metaDescription, url),
+    twitter: sharedTwitter(category.metaTitle, category.metaDescription),
+    robots: INDEX_ROBOTS,
+  };
+}
+
 export function generatePageMetadata(
   title: string,
   description: string,
@@ -155,10 +185,6 @@ export function generatePageMetadata(
 
 export function serializeJsonLd(data: unknown): string {
   return JSON.stringify(data).replace(/</g, "\\u003c");
-}
-
-export function categorySlug(category: string): string {
-  return category.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 }
 
 export function generateWebSiteJsonLd() {
@@ -230,7 +256,7 @@ export function generateBreadcrumbJsonLd(tool: Tool) {
         "@type": "ListItem",
         position: 2,
         name: tool.category,
-        item: `${SITE_URL}/#${categorySlug(tool.category)}`,
+        item: `${SITE_URL}/categories/${categorySlug(tool.category)}`,
       },
       {
         "@type": "ListItem",
@@ -273,6 +299,7 @@ export function generateHowToJsonLd(tool: Tool) {
 }
 
 export function generateSoftwareApplicationJsonLd(tool: Tool) {
+  const seoContent = getToolSeoContent(tool);
   return {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
@@ -294,19 +321,71 @@ export function generateSoftwareApplicationJsonLd(tool: Tool) {
     author: { "@id": `${SITE_URL}/#organization` },
     provider: { "@id": `${SITE_URL}/#organization` },
     isAccessibleForFree: true,
-    featureList: [
-      "Runs entirely in the browser",
-      "No account or login required",
-      "Private — data stays on your device",
-      "Free to use",
-    ],
+    featureList: seoContent.features,
   };
+}
+
+export function generateWebPageJsonLd(tool: Tool) {
+  const url = `${SITE_URL}/tools/${tool.slug}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${url}#webpage`,
+    url,
+    name: tool.metaTitle,
+    description: tool.metaDescription,
+    isPartOf: { "@id": `${SITE_URL}/#website` },
+    about: { "@id": `${url}#app` },
+    inLanguage: "en-US",
+  };
+}
+
+export function generateCategoryPageJsonLd(slug: string): string | null {
+  const category = getCategoryBySlug(slug);
+  if (!category) return null;
+
+  const url = `${SITE_URL}/categories/${slug}`;
+  const categoryTools = tools.filter((t) => t.category === category.category);
+
+  return serializeJsonLd({
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": `${url}#page`,
+        url,
+        name: category.metaTitle,
+        description: category.metaDescription,
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        inLanguage: "en-US",
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+          { "@type": "ListItem", position: 2, name: category.category, item: url },
+        ],
+      },
+      {
+        "@type": "ItemList",
+        name: `${category.title} — ${SITE_NAME}`,
+        numberOfItems: categoryTools.length,
+        itemListElement: categoryTools.map((tool, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: tool.name,
+          url: `${SITE_URL}/tools/${tool.slug}`,
+        })),
+      },
+    ],
+  });
 }
 
 export function generateToolPageJsonLd(tool: Tool): string {
   return serializeJsonLd({
     "@context": "https://schema.org",
     "@graph": [
+      generateWebPageJsonLd(tool),
       generateSoftwareApplicationJsonLd(tool),
       generateBreadcrumbJsonLd(tool),
       generateFaqJsonLd(tool.faqs),

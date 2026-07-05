@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { tools } from "@/lib/tools";
+import { getAllCategorySeo } from "@/lib/category-seo";
 import { SITE_LAST_UPDATED, DEFAULT_OG_IMAGE } from "@/lib/seo";
 import { SITE_URL } from "@/lib/utils";
 
@@ -36,5 +37,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }));
 
-  return [...staticEntries, ...toolEntries];
+  const categoryEntries: MetadataRoute.Sitemap = getAllCategorySeo().map((cat) => ({
+    url: `${SITE_URL}/categories/${cat.slug}`,
+    lastModified,
+    changeFrequency: "weekly" as const,
+    priority: 0.85,
+  }));
+
+  return [...staticEntries, ...categoryEntries, ...toolEntries];
 }

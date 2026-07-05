@@ -385,3 +385,7 @@ export function jsonToCsv(data: Record<string, unknown>[]): string {
 
 export const SITE_NAME = "Pinnacle Toolbox";
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://pinnacletoolbox.com";
+
+export function categorySlug(category: string): string {
+  return category.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+}

@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import HomePage from "@/components/HomePage";
+import HomeSeoSection from "@/components/HomeSeoSection";
 import { generateHomeMetadata, generateHomePageJsonLd } from "@/lib/seo";
 
 export const metadata = generateHomeMetadata();
@@ -13,6 +14,7 @@ export default function Page() {
       <Suspense fallback={null}>
         <HomePage />
       </Suspense>
+      <HomeSeoSection />
     </>
   );
 }

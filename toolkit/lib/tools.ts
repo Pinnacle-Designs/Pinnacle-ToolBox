@@ -4,17 +4,21 @@ import {
 import type { Tool, ToolCategory } from "./types";
 import { SITE_NAME } from "./utils";
 
-function makeMetaDesc(description: string, name: string, category: string): string {
-  const base = `Free ${name.toLowerCase()} online — ${description} Private, instant, no sign-up. ${category} tool that runs in your browser.`;
+function makeMetaDesc(description: string, name: string): string {
+  const base = `${description} Free ${name.toLowerCase()} online — instant results, no login, runs in your browser.`;
   return base.length <= 160 ? base : base.slice(0, 157) + "...";
+}
+
+function makeMetaTitle(name: string): string {
+  return `${name} Online Free — No Login Required`;
 }
 
 function makeFaqs(name: string) {
   return [
-    { question: `Is the ${name} free to use?`, answer: `Yes, ${name} is completely free with no login required. All processing happens in your browser.` },
+    { question: `Is ${name} free to use?`, answer: `Yes, ${name} is completely free with no login required. All processing happens in your browser.` },
     { question: `Does ${name} store my data?`, answer: "No. Pinnacle Toolbox runs entirely client-side. Your data never leaves your device unless you choose to download or copy it." },
+    { question: `How do I use ${name} online?`, answer: `Open the ${name} tool, enter or upload your input, and get instant results. No account or software installation needed.` },
     { question: `Can I use ${name} on mobile?`, answer: "Yes. All tools are mobile-responsive and work in modern mobile browsers." },
-    { question: "Do I need to create an account?", answer: "No account is needed. Just open the tool and start using it immediately." },
     { question: "Is my data secure?", answer: "Your data is processed locally in your browser. We do not send your input to any server." },
   ];
 }
@@ -37,8 +41,8 @@ function mk(slug: string, name: string, category: ToolCategory, description: str
     description,
     icon,
     relatedTools,
-    metaTitle: `Free ${name} Online — No Login | ${SITE_NAME}`,
-    metaDescription: makeMetaDesc(description, name, category),
+    metaTitle: `${makeMetaTitle(name)} | ${SITE_NAME}`,
+    metaDescription: makeMetaDesc(description, name),
     faqs: makeFaqs(name),
     howToUse: makeHowTo(name),
   };
