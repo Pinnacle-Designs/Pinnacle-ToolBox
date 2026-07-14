@@ -20,6 +20,7 @@ export interface Tool {
   name: string;
   category: ToolCategory;
   description: string;
+  longDescription: string;
   icon: LucideIcon;
   relatedTools: string[];
   metaTitle: string;

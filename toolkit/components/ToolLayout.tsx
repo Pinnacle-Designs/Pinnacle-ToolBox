@@ -6,6 +6,7 @@ import { categorySlug } from "@/lib/utils";
 import AdSlot from "./AdSlot";
 import Sidebar from "./Sidebar";
 import HowToUse from "./HowToUse";
+import ToolAbout from "./ToolAbout";
 import FAQ from "./FAQ";
 import RelatedTools from "./RelatedTools";
 import ToolSeoContent from "./ToolSeoContent";
@@ -65,6 +66,7 @@ export default function ToolLayout({ slug, children }: ToolLayoutProps) {
             <AdSlot size="inline" />
           </div>
 
+          <ToolAbout name={tool.name} content={tool.longDescription} />
           <HowToUse steps={tool.howToUse} />
           <ToolSeoContent tool={tool} />
           <FAQ items={tool.faqs} />

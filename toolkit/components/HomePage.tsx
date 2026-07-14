@@ -168,6 +168,17 @@ export default function HomePage() {
         {filtered.length === 0 && (
           <p className="text-center text-brand-silver-muted">No tools match your search.</p>
         )}
+
+        <section className="mt-8 rounded-2xl border border-brand-navy-light/40 bg-brand-navy/40 p-8 text-center">
+          <h2 className="text-xl font-semibold text-brand-white">Guides &amp; how-tos</h2>
+          <p className="mx-auto mt-2 max-w-2xl text-sm text-brand-silver">
+            Beyond the tools themselves, we publish practical articles on privacy-first workflows,
+            JSON hygiene, clearer web copy, and image optimization.
+          </p>
+          <Link href="/guides" className="btn-primary mt-5 inline-flex px-6">
+            Browse guides
+          </Link>
+        </section>
       </div>
     </div>
   );

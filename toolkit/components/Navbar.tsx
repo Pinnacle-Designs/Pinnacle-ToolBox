@@ -79,6 +79,7 @@ export default function Navbar() {
               </>
             )}
           </div>
+          <Link href="/guides" onClick={closeMenus} className="text-sm font-medium text-brand-silver transition hover:text-brand-orange">Guides</Link>
           <Link href="/about" onClick={closeMenus} className="text-sm font-medium text-brand-silver transition hover:text-brand-orange">About</Link>
           <Link href="/contact" onClick={closeMenus} className="text-sm font-medium text-brand-silver transition hover:text-brand-orange">Contact</Link>
         </nav>
@@ -110,6 +111,7 @@ export default function Navbar() {
                 </Link>
               );
             })}
+            <Link href="/guides" onClick={closeMenus} className="block rounded-lg px-3 py-2 text-sm text-brand-silver hover:text-brand-orange">Guides</Link>
             <Link href="/about" onClick={closeMenus} className="block rounded-lg px-3 py-2 text-sm text-brand-silver hover:text-brand-orange">About</Link>
             <Link href="/contact" onClick={closeMenus} className="block rounded-lg px-3 py-2 text-sm text-brand-silver hover:text-brand-orange">Contact</Link>
           </nav>

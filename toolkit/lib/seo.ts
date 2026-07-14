@@ -13,7 +13,7 @@ export const SITE_TAGLINE = "Free Online Tools — Fast, Simple, Private";
 export const DEFAULT_OG_IMAGE = "/logo.png";
 
 /** Stable date for sitemap lastmod — update when publishing meaningful site changes. */
-export const SITE_LAST_UPDATED = new Date("2026-07-05");
+export const SITE_LAST_UPDATED = new Date("2026-07-14");
 
 const HOME_KEYWORDS = [
   "free online tools",

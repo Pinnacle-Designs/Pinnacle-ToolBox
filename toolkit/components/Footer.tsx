@@ -22,6 +22,7 @@ export default function Footer() {
             <h3 className="font-semibold text-brand-white">Company</h3>
             <ul className="mt-3 space-y-2 text-sm">
               <li><Link href="/about" className="text-brand-silver-muted transition hover:text-brand-orange">About</Link></li>
+              <li><Link href="/guides" className="text-brand-silver-muted transition hover:text-brand-orange">Guides</Link></li>
               <li><Link href="/contact" className="text-brand-silver-muted transition hover:text-brand-orange">Contact</Link></li>
             </ul>
           </div>
@@ -29,6 +30,7 @@ export default function Footer() {
             <h3 className="font-semibold text-brand-white">Legal</h3>
             <ul className="mt-3 space-y-2 text-sm">
               <li><Link href="/privacy" className="text-brand-silver-muted transition hover:text-brand-orange">Privacy Policy</Link></li>
+              <li><Link href="/terms" className="text-brand-silver-muted transition hover:text-brand-orange">Terms of Use</Link></li>
             </ul>
           </div>
           <div>

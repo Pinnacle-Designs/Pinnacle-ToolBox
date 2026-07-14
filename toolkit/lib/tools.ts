@@ -2,6 +2,7 @@ import {
   ArrowLeftRight, BarChart3, Binary, BookOpen, Braces, Cake, CalendarRange, CaseSensitive, CircleStop, Clock, Clock3, Code, Code2, Crop, Divide, Eraser, Eye, FileCode, FileSpreadsheet, FileText, FileType, FileUser, Fingerprint, GitCompare, Globe, Globe2, Hash, Hourglass, Image, Key, KeyRound, Languages, Layers, Link, Link2, ListMinus, Lock, Maximize2, Minimize2, Paintbrush, Palette, Percent, Pipette, QrCode, Receipt, RefreshCw, Ruler, ScanBarcode, Search, Sheet, ShieldOff, Shrink, Sparkles, Superscript, SwatchBook, Table, Timer, Type, Users,
 } from "lucide-react";
 import type { Tool, ToolCategory } from "./types";
+import { toolContent } from "./tool-content";
 import { SITE_NAME } from "./utils";
 
 function makeMetaDesc(description: string, name: string): string {
@@ -13,38 +14,23 @@ function makeMetaTitle(name: string): string {
   return `${name} Online Free — No Login Required`;
 }
 
-function makeFaqs(name: string) {
-  return [
-    { question: `Is ${name} free to use?`, answer: `Yes, ${name} is completely free with no login required. All processing happens in your browser.` },
-    { question: `Does ${name} store my data?`, answer: "No. Pinnacle Toolbox runs entirely client-side. Your data never leaves your device unless you choose to download or copy it." },
-    { question: `How do I use ${name} online?`, answer: `Open the ${name} tool, enter or upload your input, and get instant results. No account or software installation needed.` },
-    { question: `Can I use ${name} on mobile?`, answer: "Yes. All tools are mobile-responsive and work in modern mobile browsers." },
-    { question: "Is my data secure?", answer: "Your data is processed locally in your browser. We do not send your input to any server." },
-  ];
-}
-
-function makeHowTo(name: string): string[] {
-  return [
-    `Open the ${name} tool on Pinnacle Toolbox.`,
-    "Enter or upload your input in the tool interface.",
-    "Adjust any available options to customize the output.",
-    "Review the results displayed instantly on screen.",
-    "Copy or download the output as needed.",
-  ];
-}
-
 function mk(slug: string, name: string, category: ToolCategory, description: string, icon: Tool["icon"], relatedTools: string[]): Tool {
+  const editorial = toolContent[slug];
+  if (!editorial) {
+    throw new Error(`Missing editorial content for tool: ${slug}`);
+  }
   return {
     slug,
     name,
     category,
     description,
+    longDescription: editorial.longDescription,
     icon,
     relatedTools,
     metaTitle: `${makeMetaTitle(name)} | ${SITE_NAME}`,
     metaDescription: makeMetaDesc(description, name),
-    faqs: makeFaqs(name),
-    howToUse: makeHowTo(name),
+    faqs: editorial.faqs,
+    howToUse: editorial.howToUse,
   };
 }
 
